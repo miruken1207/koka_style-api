@@ -1,0 +1,96 @@
+definitions:
+  models.Credentials:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      description: Проверка авторизации по Bearer-токену, редирект на /login, если
+        не авторизован
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Welcome, {username}!
+          schema:
+            type: string
+        "307":
+          description: Redirect to /login
+          schema:
+            type: string
+      summary: Корневой маршрут
+      tags:
+      - root
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Логин по username и password, возвращает Bearer-токен при успехе
+      parameters:
+      - description: Данные для входа
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/models.Credentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Bearer token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Invalid credentials
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Авторизация пользователя
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Регистрирует нового пользователя по username и password
+      parameters:
+      - description: Данные для регистрации
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/models.Credentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: registered
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input или User already exists
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Регистрация пользователя
+      tags:
+      - auth
+swagger: "2.0"

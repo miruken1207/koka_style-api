@@ -8,6 +8,14 @@ import (
 	"gorm.io/gorm"
 )
 
+// Root godoc
+// @Summary      Корневой маршрут
+// @Description  Проверка авторизации по Bearer-токену, редирект на /login, если не авторизован
+// @Tags         root
+// @Produce      plain
+// @Success      200 {string} string "Welcome, {username}!"
+// @Failure      307 {string} string "Redirect to /login"
+// @Router       / [get]
 func Root(db *gorm.DB) gin.HandlerFunc {
 
 	return func(context *gin.Context) {
