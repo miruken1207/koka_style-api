@@ -17,33 +17,22 @@ const docTemplate = `{
     "paths": {
         "/": {
             "get": {
-                "description": "Проверка авторизации по Bearer-токену, редирект на /login, если не авторизован",
                 "produces": [
-                    "text/plain"
+                    "application/json"
                 ],
                 "tags": [
                     "root"
                 ],
-                "summary": "Корневой маршрут",
+                "summary": "Root route",
                 "responses": {
                     "200": {
-                        "description": "Welcome, {username}!",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "307": {
-                        "description": "Redirect to /login",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "OK"
                     }
                 }
             }
         },
         "/login": {
             "post": {
-                "description": "Логин по username и password, возвращает Bearer-токен при успехе",
                 "consumes": [
                     "application/json"
                 ],
@@ -53,52 +42,36 @@ const docTemplate = `{
                 "tags": [
                     "auth"
                 ],
-                "summary": "Авторизация пользователя",
+                "summary": "User login",
                 "parameters": [
                     {
-                        "description": "Данные для входа",
+                        "description": "User credentials (username and password)",
                         "name": "credentials",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Credentials"
+                            "$ref": "#/definitions/models.Login_input"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Bearer token",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
+                        "description": "OK"
                     },
                     "400": {
-                        "description": "Invalid input",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
+                        "description": "Bad Request"
                     },
                     "401": {
-                        "description": "Invalid credentials",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }
         },
-        "/register": {
+        "/sign_up": {
             "post": {
-                "description": "Регистрирует нового пользователя по username и password",
                 "consumes": [
                     "application/json"
                 ],
@@ -108,45 +81,59 @@ const docTemplate = `{
                 "tags": [
                     "auth"
                 ],
-                "summary": "Регистрация пользователя",
+                "summary": "User registration",
                 "parameters": [
                     {
-                        "description": "Данные для регистрации",
+                        "description": "Registration data (username, email, password)",
                         "name": "credentials",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Credentials"
+                            "$ref": "#/definitions/models.SignUp_input"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "registered",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
+                        "description": "OK"
                     },
                     "400": {
-                        "description": "Invalid input или User already exists",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }
         }
     },
     "definitions": {
-        "models.Credentials": {
+        "models.Login_input": {
             "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
             "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SignUp_input": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
                 "password": {
                     "type": "string"
                 },

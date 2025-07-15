@@ -5,6 +5,7 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
+	config "koka_style/config"
 	database "koka_style/database"
 	handler "koka_style/handlers"
 
@@ -12,6 +13,8 @@ import (
 )
 
 func main() {
+
+	config.Init()
 
 	db, err := database.Init()
 	if err != nil {
@@ -23,7 +26,7 @@ func main() {
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.GET("/", handler.Root(db))
-	router.POST("/register", handler.Register(db))
+	router.POST("/sign_up", handler.SignUp(db))
 	router.POST("/login", handler.Login(db))
 
 	router.Run(":8080")

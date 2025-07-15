@@ -1,96 +1,86 @@
 definitions:
-  models.Credentials:
+  models.Login_input:
     properties:
       password:
         type: string
       username:
         type: string
+    required:
+    - password
+    - username
+    type: object
+  models.SignUp_input:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
     type: object
 info:
   contact: {}
 paths:
   /:
     get:
-      description: Проверка авторизации по Bearer-токену, редирект на /login, если
-        не авторизован
       produces:
-      - text/plain
+      - application/json
       responses:
         "200":
-          description: Welcome, {username}!
-          schema:
-            type: string
-        "307":
-          description: Redirect to /login
-          schema:
-            type: string
-      summary: Корневой маршрут
+          description: OK
+      summary: Root route
       tags:
       - root
   /login:
     post:
       consumes:
       - application/json
-      description: Логин по username и password, возвращает Bearer-токен при успехе
       parameters:
-      - description: Данные для входа
+      - description: User credentials (username and password)
         in: body
         name: credentials
         required: true
         schema:
-          $ref: '#/definitions/models.Credentials'
+          $ref: '#/definitions/models.Login_input'
       produces:
       - application/json
       responses:
         "200":
-          description: Bearer token
-          schema:
-            additionalProperties:
-              type: string
-            type: object
+          description: OK
         "400":
-          description: Invalid input
-          schema:
-            additionalProperties:
-              type: string
-            type: object
+          description: Bad Request
         "401":
-          description: Invalid credentials
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      summary: Авторизация пользователя
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: User login
       tags:
       - auth
-  /register:
+  /sign_up:
     post:
       consumes:
       - application/json
-      description: Регистрирует нового пользователя по username и password
       parameters:
-      - description: Данные для регистрации
+      - description: Registration data (username, email, password)
         in: body
         name: credentials
         required: true
         schema:
-          $ref: '#/definitions/models.Credentials'
+          $ref: '#/definitions/models.SignUp_input'
       produces:
       - application/json
       responses:
         "200":
-          description: registered
-          schema:
-            additionalProperties:
-              type: string
-            type: object
+          description: OK
         "400":
-          description: Invalid input или User already exists
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      summary: Регистрация пользователя
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: User registration
       tags:
       - auth
 swagger: "2.0"
