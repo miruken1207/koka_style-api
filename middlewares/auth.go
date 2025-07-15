@@ -1,41 +1,37 @@
-package middlewares
+package middleware
 
 import (
-	"net/http"
-
 	config "koka_style/config"
 	model "koka_style/models"
+
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 )
 
-func JWTAuthMiddleware() gin.HandlerFunc {
+func AuthMiddleware() gin.HandlerFunc {
 
 	return func(context *gin.Context) {
 
-		tokenString := context.GetHeader("Authorization")
-
-		if tokenString == "" {
-			context.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header required"})
-			context.Abort()
+		tokenString, err := context.Cookie("token")
+		if err != nil {
+			context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			return
 		}
 
-		tokenString = tokenString[len("Bearer "):]
-
-		claims := &model.Claims{}
-		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.ParseWithClaims(tokenString, &model.Claims{}, func(token *jwt.Token) (interface{}, error) {
 			return config.JwtSecret, nil
 		})
 
 		if err != nil || !token.Valid {
-			context.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
-			context.Abort()
+			context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 			return
 		}
 
-		context.Set("username", claims.Username)
+		if claims, ok := token.Claims.(*model.Claims); ok {
+			context.Set("username", claims.Username)
+		}
 
 		context.Next()
 	}

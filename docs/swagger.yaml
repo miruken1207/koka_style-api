@@ -60,6 +60,16 @@ paths:
       summary: User login
       tags:
       - auth
+  /products:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get list of products
+      tags:
+      - Products
   /sign_up:
     post:
       consumes:

@@ -14,6 +14,7 @@ import (
 )
 
 // Login godoc
+//
 //	@Summary	User login
 //	@Tags		auth
 //	@Accept		json
@@ -59,6 +60,7 @@ func Login(db *gorm.DB) gin.HandlerFunc {
 			return
 		}
 
-		context.JSON(http.StatusOK, gin.H{"token": tokenString}) // 200
+		context.SetCookie("token", tokenString, 86400, "/", "", false, true)
+		context.JSON(http.StatusOK, gin.H{"message": "Login successfully"}) // 200
 	}
 }

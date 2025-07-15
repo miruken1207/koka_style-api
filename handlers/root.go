@@ -8,6 +8,7 @@ import (
 )
 
 // Root godoc
+//
 //	@Summary	Root route
 //	@Tags		root
 //	@Produce	json

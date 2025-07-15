@@ -11,6 +11,7 @@ import (
 )
 
 // SignUp godoc
+//
 //	@Summary	User registration
 //	@Tags		auth
 //	@Accept		json

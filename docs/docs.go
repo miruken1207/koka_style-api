@@ -70,6 +70,22 @@ const docTemplate = `{
                 }
             }
         },
+        "/products": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get list of products",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/sign_up": {
             "post": {
                 "consumes": [
