@@ -9,6 +9,7 @@ import (
 	database "koka_style/database"
 	handler "koka_style/handlers"
 	auth "koka_style/handlers/auth"
+	cart "koka_style/handlers/cart"
 
 	middleware "koka_style/middlewares"
 
@@ -37,6 +38,11 @@ func main() {
 	router.POST("/logout", auth.Logout(db))
 
 	router.GET("/products", middleware.AuthMiddleware(), handler.GetProducts(db))
+
+	router.POST("/cart/:product_id", middleware.AuthMiddleware(), cart.AddToCart(db))
+	router.GET("/cart", middleware.AuthMiddleware(), cart.GetCart(db))
+	router.DELETE("/cart/:product_id", middleware.AuthMiddleware(), cart.RemoveFromCart(db))
+	router.DELETE("/cart", middleware.AuthMiddleware(), cart.ClearCart(db))
 
 	router.Run(":8080")
 }

@@ -27,6 +27,7 @@ func Init() (*gorm.DB, error) {
 	}
 
 	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.Cart{})
 
 	return db, nil
 }

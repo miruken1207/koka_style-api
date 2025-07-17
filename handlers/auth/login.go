@@ -49,6 +49,7 @@ func Login(db *gorm.DB) gin.HandlerFunc {
 		expirationTime := time.Now().Add(24 * time.Hour)
 		claims := &model.Claims{
 			Username: user.Username,
+			ID:       user.ID,
 			RegisteredClaims: jwt.RegisteredClaims{
 				ExpiresAt: jwt.NewNumericDate(expirationTime),
 			},

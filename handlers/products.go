@@ -17,6 +17,7 @@ import (
 //	@Success	200
 //	@Failure	401
 //	@Failure	500
+//  @Security	ApiKeyAuth
 //	@Router		/products [get]
 func GetProducts(db *gorm.DB) gin.HandlerFunc {
 
