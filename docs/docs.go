@@ -70,18 +70,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/logout": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User logout",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/products": {
             "get": {
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Products"
+                    "products"
                 ],
                 "summary": "Get list of products",
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }

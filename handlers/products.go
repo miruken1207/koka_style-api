@@ -3,6 +3,8 @@ package handlers
 import (
 	"net/http"
 
+	model "koka_style/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -13,9 +15,18 @@ import (
 //	@Tags		products
 //	@Produce	json
 //	@Success	200
+//	@Failure	401
+//	@Failure	500
 //	@Router		/products [get]
 func GetProducts(db *gorm.DB) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "List of products"})
+
+	return func(context *gin.Context) {
+
+		var products []model.Product
+		if err := db.Find(&products).Error; err != nil {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": "Unable retrieve products"}) // 500
+		}
+
+		context.JSON(http.StatusOK, gin.H{"List of products": products}) // 200
 	}
 }

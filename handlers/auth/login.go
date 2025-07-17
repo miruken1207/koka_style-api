@@ -20,6 +20,7 @@ import (
 //	@Accept		json
 //	@Produce	json
 //	@Param		credentials	body	model.Login_input	true	"User credentials (username and password)"
+//
 //	@Success	200
 //	@Failure	400
 //	@Failure	401

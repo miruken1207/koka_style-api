@@ -60,6 +60,16 @@ paths:
       summary: User login
       tags:
       - auth
+  /logout:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: User logout
+      tags:
+      - auth
   /products:
     get:
       produces:
@@ -67,9 +77,13 @@ paths:
       responses:
         "200":
           description: OK
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
       summary: Get list of products
       tags:
-      - Products
+      - products
   /sign_up:
     post:
       consumes:

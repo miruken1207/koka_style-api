@@ -12,15 +12,16 @@ import (
 
 // SignUp godoc
 //
-//	@Summary	User registration
-//	@Tags		auth
-//	@Accept		json
-//	@Produce	json
-//	@Param		credentials	body	model.SignUp_input	true	"Registration data (username, email, password)"
-//	@Success	200
-//	@Failure	400
-//	@Failure	500
-//	@Router		/sign_up [post]
+// @Summary	User registration
+// @Tags		auth
+// @Accept		json
+// @Produce		json
+// @Param		credentials	body	model.SignUp_input	true	"Registration data (username, email, password)"
+//
+// @Success	200
+// @Failure	400
+// @Failure	500
+// @Router		/sign_up [post]
 func SignUp(db *gorm.DB) gin.HandlerFunc {
 
 	return func(context *gin.Context) {
