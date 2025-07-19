@@ -23,6 +23,11 @@ func Root(db *gorm.DB) gin.HandlerFunc {
 			"routes": []string{
 				"POST /sign_up — register a new user",
 				"POST /login — authenticate a user",
+				"POST /logout — unauthorize a user",
+				"GET /cart - get user's cart",
+				"POST /cart/{product_id} - add product to cart",
+				"DELETE /cart/{product_id} - remove product from cart",
+				"DELETE /cart - clear user's cart",
 			},
 		})
 	}

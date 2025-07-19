@@ -1,26 +1,26 @@
 definitions:
   models.Login_input:
     properties:
-      password:
+    username:
         type: string
-      username:
+    password:
         type: string
     required:
-    - password
     - username
+    - password
     type: object
   models.SignUp_input:
     properties:
       email:
         type: string
-      password:
-        type: string
       username:
+        type: string
+      password:
         type: string
     required:
     - email
-    - password
     - username
+    - password
     type: object
 info:
   contact: {}

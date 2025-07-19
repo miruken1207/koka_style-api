@@ -297,14 +297,14 @@ const docTemplate = `{
         "models.Login_input": {
             "type": "object",
             "required": [
-                "password",
-                "username"
+                "username",
+                "password"
             ],
             "properties": {
-                "password": {
+                "username": {
                     "type": "string"
                 },
-                "username": {
+                "password": {
                     "type": "string"
                 }
             }
@@ -313,19 +313,20 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "email",
-                "password",
-                "username"
+                "username",
+                "password"
             ],
             "properties": {
                 "email": {
                     "type": "string"
                 },
-                "password": {
-                    "type": "string"
-                },
                 "username": {
                     "type": "string"
+                },
+                "password": {
+                    "type": "string"
                 }
+                
             }
         }
     }
