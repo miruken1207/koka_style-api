@@ -18,7 +18,7 @@ KoKa Style — это API для онлайн-магазина, разработ
 
 2. Склонируйте репозиторий:
 ```
-git clone [<ссылка-на-репозиторий>](https://github.com/miruken1207/koka_style-api)
+git clone https://github.com/miruken1207/koka_style-api
 ```
 
 3. Перейдите в директорию проекта и запустите:
